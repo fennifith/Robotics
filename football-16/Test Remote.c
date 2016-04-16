@@ -55,19 +55,20 @@ task main() {
         motor3 = -1 * (DEFAULT_SPEED / 4);
     } else {
         //move arm in accordance with left joystick
+        //set value to left joystick up/down
         if (value + (vexRT[Ch3] / 2) > 0 && abs(value + (vexRT[Ch3] / 2)) < MAX_VALUE) value += vexRT[Ch3] / 2;
         
-        //set motor speed based on values
+        //set motor speed based on value
         if (value > SensorValue[encoder2]) {
-            motor2 = value - SensorValue[encoder2]
+            motor2 = value - SensorValue[encoder2];
         } else {
-            motor2 = -1 * (SensorValue[encoder2] - value)
+            motor2 = -1 * (SensorValue[encoder2] - value);
         }
         
         if (value > SensorValue[encoder3]) {
-            motor3 = value - SensorValue[encoder3]
+            motor3 = value - SensorValue[encoder3];
         } else {
-            motor3 = -1 * (SensorValue[encoder3] - value)
+            motor3 = -1 * (SensorValue[encoder3] - value);
         }
         
         motor[rotateMotor] = vexRT[Ch4];
