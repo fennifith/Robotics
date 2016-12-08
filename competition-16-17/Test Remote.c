@@ -31,7 +31,7 @@ task main() {
 		if (vexRT[Btn5U] && !SensorValue(touchSensor3)) {
 			motor[armMotor3] = -getSpeed();
 			motor3Value = SensorValue(encoder3);
-		} else if (vexRT[Btn5D]) {
+		} else if (vexRT[Btn5D] && SensorValue(encoder3) > -200) {
 			motor[armMotor3] = getSpeed();
 			motor3Value = SensorValue(encoder3);
 		} else if (vexRT[Btn7U]) {
@@ -46,7 +46,7 @@ task main() {
 			SensorValue[encoder3] = 0;
 		}
 
-		if (vexRT[Btn6U]) {
+		if (vexRT[Btn6U] && SensorValue(encoder4) < 450) {
 			motor[strongArm] = -getSpeed();
 			motor[strongArm2] = -getSpeed();
 			strongArmValue = 3.5 * SensorValue(encoder4);
@@ -69,17 +69,17 @@ task main() {
 		}
 
 		if (vexRT[Btn7R]) {
-			motor[klaw1] = 127;
-			motor[klaw2] = 127;
+			motor[klaw1] = getSpeed();
+			motor[klaw2] = getSpeed();
 			klaw = true;
 		} else if (vexRT[Btn7L]) {
-			motor[klaw1] = -127;
-			motor[klaw2] = -127;
+			motor[klaw1] = -getSpeed();
+			motor[klaw2] = -getSpeed();
 			klaw = false;
 		} else {
 			if (klaw) {
-				motor[klaw1] = 5;
-				motor[klaw2] = 5;
+				motor[klaw1] = getSpeed();
+				motor[klaw2] = getSpeed();
 			} else {
 				motor[klaw1] = -5;
 				motor[klaw2] = -5;
