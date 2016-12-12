@@ -38,8 +38,8 @@ task main() {
 
 	//move forwards to the fence while raising the arm
 	for (int i = 127; i >= 0; i--) {
-		motor[leftMotor] = i;
-		motor[rightMotor] = i;
+		motor[leftMotor] = -i;
+		motor[rightMotor] = -i;
 		sleep(i * 3);
 
 		motor[armMotor3] = SensorValue(encoder3) + 175;
