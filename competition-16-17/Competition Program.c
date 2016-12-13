@@ -74,24 +74,36 @@ task autonomous() {
 
 	//move forwards to the fence while raising the arm
 	for (int i = 127; i >= 0; i--) {
-		motor[leftMotor] = -i;
-		motor[rightMotor] = -i;
+		motor[leftMotor] = -i / 2;
+		motor[rightMotor] = -i / 2;
 		sleep(i * 3);
 
-		motor[armMotor3] = SensorValue(encoder3) + 175;
+		motor[armMotor3] = SensorValue(encoder3) + 150;
 
-		motor[strongArm] = (3.5 * SensorValue(encoder4)) - 360;
-		motor[strongArm2] = (3.5 * SensorValue(encoder4)) - 360;
+		motor[strongArm] = (3.5 * SensorValue(encoder4)) - 380;
+		motor[strongArm2] = (3.5 * SensorValue(encoder4)) - 380;
 	}
 
 	//drop the star
 	motor[klaw1] = -127;
 	motor[klaw2] = -127;
 
-	//wait for two seconds for the star to drop, then stop the motors
+	//wait for five seconds for the star to drop, then end the program
 	sleep(2000);
-	motor[klaw1] = 0;
-	motor[klaw2] = 0;
+	
+	motor[armMotor3] = -127;
+	sleep(200);
+	motor[armMotor3] = 127;
+	sleep(200);
+	motor[armMotor3] = -127;
+	sleep(200);
+	motor[armMotor3] = 127;
+	sleep(200);
+	motor[armMotor3] = -127;
+	sleep(200);
+	motor[armMotor3] = 127;
+	sleep(200);
+	motor[armMotor3] = 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -127,7 +139,7 @@ task usercontrol() {
 			motor[armMotor3] = getSpeed();
 			motor3Value = SensorValue(encoder3);
 		} else if (vexRT[Btn7U]) {
-			motor[armMotor3] = SensorValue(encoder3) + 175;
+			motor[armMotor3] = SensorValue(encoder3) + 150;
 			motor3Value = SensorValue(encoder3);
 		} else {
 			motor[armMotor3] = SensorValue(encoder3) - motor3Value;
