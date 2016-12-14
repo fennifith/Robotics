@@ -25,11 +25,11 @@ task main() {
 
 	while (true) {
 
-    //drive motors
+		//drive motors
 		motor[rightMotor] = (vexRT[Ch4] - vexRT[Ch3] - vexRT[Ch2] + vexRT[Ch1] + motor[rightMotor]) / 3;
 		motor[leftMotor] = (-vexRT[Ch4] - vexRT[Ch3] - vexRT[Ch2] - vexRT[Ch1] + motor[rightMotor]) / 3;
 
-    //upper arm motor
+		//upper arm motor
 		if (vexRT[Btn5U] && !SensorValue(touchSensor3)) {
 			motor[armMotor3] = -getSpeed();
 			motor3Value = SensorValue(encoder3);
@@ -48,7 +48,7 @@ task main() {
 			SensorValue[encoder3] = 0;
 		}
 
-    //lower arm motors
+		//lower arm motors
 		if (vexRT[Btn6U] && SensorValue(encoder4) < 450) {
 			motor[strongArm] = -getSpeed();
 			motor[strongArm2] = -getSpeed();
@@ -71,7 +71,7 @@ task main() {
 			SensorValue[encoder4] = 0;
 		}
 
-    //set claw open/closed
+		//set claw open/closed
 		if (vexRT[Btn7R]) {
 			motor[klaw1] = getSpeed();
 			motor[klaw2] = getSpeed();
@@ -91,7 +91,7 @@ task main() {
 			}
 		}
 
-    //display encoder values on LCD (debug only)
+		//display encoder values on LCD (debug only)
 		displayLCDNumber(0, 0, SensorValue(encoder3));
 		displayLCDNumber(0, 6, SensorValue(encoder4) * 3.5);
 
