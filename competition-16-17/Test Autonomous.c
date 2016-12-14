@@ -17,43 +17,42 @@ task main() {
 	SensorValue[encoder3] = 0;
 	SensorValue[encoder4] = 0;
 
-	//reset arm position
-	while (!SensorValue(touchSensor3) || !SensorValue(touchSensor4)) {
-		if (!SensorValue(touchSensor3)) {
-			motor[armMotor3] = -70;
-		} else motor[armMotor3] = 0;
-
-		if (!SensorValue(touchSensor4)) {
-			motor[strongArm] = 70;
-			motor[strongArm2] = 70;
-		} else {
-			motor[strongArm] = 0;
-			motor[strongArm2] = 0;
-		}
-	}
-
 	//should be holding a star - grab it
 	motor[klaw1] = 100;
 	motor[klaw2] = 100;
 
 	//move forwards to the fence while raising the arm
-	for (int i = 127; i >= 0; i--) {
-		motor[leftMotor] = -i;
-		motor[rightMotor] = -i;
-		sleep(i * 3);
+	for (int i = 0; i < 4000; i++) {
+		motor[leftMotor] = -127;
+		motor[rightMotor] = -127;
 
-		motor[armMotor3] = SensorValue(encoder3) + 175;
+		motor[armMotor3] = SensorValue(encoder3) + 150;
 
-		motor[strongArm] = (3.5 * SensorValue(encoder4)) - 360;
-		motor[strongArm2] = (3.5 * SensorValue(encoder4)) - 360;
+		motor[strongArm] = (3.5 * SensorValue(encoder4)) - 380;
+		motor[strongArm2] = (3.5 * SensorValue(encoder4)) - 380;
+
+		sleep(1);
 	}
+
+	motor[leftMotor] = 0;
+	motor[rightMotor] = 0;
 
 	//drop the star
 	motor[klaw1] = -127;
 	motor[klaw2] = -127;
 
-	//wait for two seconds for the star to drop, then stop the motors
-	sleep(2000);
-	motor[klaw1] = 0;
-	motor[klaw2] = 0;
+	//shake the arm
+	motor[armMotor3] = -127;
+	sleep(200);
+	motor[armMotor3] = 127;
+	sleep(200);
+	motor[armMotor3] = -127;
+	sleep(200);
+	motor[armMotor3] = 127;
+	sleep(200);
+	motor[armMotor3] = -127;
+	sleep(200);
+	motor[armMotor3] = 127;
+	sleep(200);
+	motor[armMotor3] = 0;
 }
