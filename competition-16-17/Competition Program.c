@@ -5,8 +5,8 @@
 #pragma config(Sensor, dgtl6,  touchSensor3,   sensorTouch)
 #pragma config(Motor,  port1,           leftMotor,     tmotorVex393_HBridge, openLoop, reversed)
 #pragma config(Motor,  port2,           armMotor3,     tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port3,           strongArm,     tmotorVex393_MC29, openLoop)
-#pragma config(Motor,  port4,           strongArm2,    tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port3,           strongArm,     tmotorVex393_MC29, openLoop, reversed)
+#pragma config(Motor,  port4,           strongArm2,    tmotorVex393_MC29, openLoop)
 #pragma config(Motor,  port5,           klaw1,         tmotorVex269_MC29, openLoop)
 #pragma config(Motor,  port6,           klaw2,         tmotorVex269_MC29, openLoop, reversed)
 #pragma config(Motor,  port10,          rightMotor,    tmotorVex393_HBridge, openLoop)
@@ -115,21 +115,21 @@ task usercontrol() {
 	while (true) {
 
 		//drive motors
-		motor[rightMotor] = (vexRT[Ch4] - vexRT[Ch3] - vexRT[Ch2] + vexRT[Ch1] + motor[rightMotor]) / 3;
-		motor[leftMotor] = (-vexRT[Ch4] - vexRT[Ch3] - vexRT[Ch2] - vexRT[Ch1] + motor[rightMotor]) / 3;
+		motor[rightMotor] = (-vexRT[Ch4] - vexRT[Ch3] - vexRT[Ch2] - vexRT[Ch1] + motor[rightMotor]) / 3;
+		motor[leftMotor] = (vexRT[Ch4] - vexRT[Ch3] - vexRT[Ch2] + vexRT[Ch1] + motor[rightMotor]) / 3;
 
 		//upper arm motor
 		if (vexRT[Btn5U] && !SensorValue(touchSensor3)) {
 			motor[armMotor3] = -getSpeed();
-			motor3Value = SensorValue(encoder3);
+			motor3Value = 2 * SensorValue(encoder3);
 		} else if (vexRT[Btn5D] && SensorValue(encoder3) > -200) {
 			motor[armMotor3] = getSpeed();
-			motor3Value = SensorValue(encoder3);
+			motor3Value = 2 * SensorValue(encoder3);
 		} else if (vexRT[Btn7U]) {
 			motor[armMotor3] = SensorValue(encoder3) + 150;
-			motor3Value = SensorValue(encoder3);
+			motor3Value = 2 * SensorValue(encoder3);
 		} else {
-			motor[armMotor3] = SensorValue(encoder3) - motor3Value;
+			motor[armMotor3] = (2 * SensorValue(encoder3)) - motor3Value;
 		}
 		
 		if (SensorValue(touchSensor3)) {
