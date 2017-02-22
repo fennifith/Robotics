@@ -119,10 +119,10 @@ task usercontrol() {
 		motor[leftMotor] = (vexRT[Ch4] - vexRT[Ch3] - vexRT[Ch2] + vexRT[Ch1] + motor[rightMotor]) / 3;
 
 		//upper arm motor
-		if (vexRT[Btn5U] && !SensorValue(touchSensor3)) {
+		if (vexRT[Btn5U]) {
 			motor[armMotor3] = -getSpeed();
 			motor3Value = 2 * SensorValue(encoder3);
-		} else if (vexRT[Btn5D] && SensorValue(encoder3) > -200) {
+		} else if (vexRT[Btn5D]) {
 			motor[armMotor3] = getSpeed();
 			motor3Value = 2 * SensorValue(encoder3);
 		} else if (vexRT[Btn7U]) {
@@ -138,11 +138,11 @@ task usercontrol() {
 		}
 
 		//lower arm motors
-		if (vexRT[Btn6U] && SensorValue(encoder4) < 450) {
+		if (vexRT[Btn6U]) {
 			motor[strongArm] = -getSpeed();
 			motor[strongArm2] = -getSpeed();
 			strongArmValue = 3.5 * SensorValue(encoder4);
-		} else if (vexRT[Btn6D] && !SensorValue(touchSensor4)) {
+		} else if (vexRT[Btn6D]) {
 			motor[strongArm] = getSpeed();
 			motor[strongArm2] = getSpeed();
 			strongArmValue = 3.5 * SensorValue(encoder4);
@@ -183,29 +183,6 @@ task usercontrol() {
 		//display encoder values on LCD (debug only)
 		displayLCDNumber(0, 0, SensorValue(encoder3));
 		displayLCDNumber(0, 6, SensorValue(encoder4) * 3.5);
-
-		if (vexRT[Btn7D]) {
-			while ((!SensorValue(touchSensor3) || !SensorValue(touchSensor4)) && vexRT[Btn7D]) {
-				if (!SensorValue(touchSensor3)) {
-					motor[armMotor3] = -70;
-					motor3Value = SensorValue(encoder3);
-				} else motor[armMotor3] = 0;
-
-				if (!SensorValue(touchSensor4)) {
-					motor[strongArm] = 70;
-					motor[strongArm2] = 70;
-					strongArmValue = 3.5 * SensorValue(encoder4);
-				} else {
-					motor[strongArm] = 0;
-					motor[strongArm2] = 0;
-				}
-			}
-
-			SensorValue[encoder3] = 0;
-			SensorValue[encoder4] = 0;
-			motor3Value = 0;
-			strongArmValue = 0;
-		}
 	}
 }
 
