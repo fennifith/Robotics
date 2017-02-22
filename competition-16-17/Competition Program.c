@@ -59,13 +59,13 @@ task autonomous() {
 
 	//move forwards to the fence while raising the arm
 	for (int i = 0; i < 4000; i++) {
-		motor[leftMotor] = -127;
-		motor[rightMotor] = -127;
+		motor[leftMotor] = 100;
+		motor[rightMotor] = 100;
 
-		motor[armMotor3] = SensorValue(encoder3) + 150;
+		motor[armMotor3] = SensorValue(encoder3) - 200;
 
-		motor[strongArm] = (3.5 * SensorValue(encoder4)) - 380;
-		motor[strongArm2] = (3.5 * SensorValue(encoder4)) - 380;
+		motor[strongArm] = (3.5 * SensorValue(encoder4)) + 380;
+		motor[strongArm2] = (3.5 * SensorValue(encoder4)) + 380;
 
 		sleep(1);
 	}
@@ -115,18 +115,15 @@ task usercontrol() {
 	while (true) {
 
 		//drive motors
-		motor[rightMotor] = (-vexRT[Ch4] - vexRT[Ch3] - vexRT[Ch2] - vexRT[Ch1] + motor[rightMotor]) / 3;
-		motor[leftMotor] = (vexRT[Ch4] - vexRT[Ch3] - vexRT[Ch2] + vexRT[Ch1] + motor[rightMotor]) / 3;
+		motor[rightMotor] = (-vexRT[Ch4] + vexRT[Ch3] + vexRT[Ch2] - vexRT[Ch1] + motor[rightMotor]) / 3;
+		motor[leftMotor] = (vexRT[Ch4] + vexRT[Ch3] + vexRT[Ch2] + vexRT[Ch1] + motor[rightMotor]) / 3;
 
 		//upper arm motor
 		if (vexRT[Btn5U]) {
-			motor[armMotor3] = -getSpeed();
-			motor3Value = 2 * SensorValue(encoder3);
-		} else if (vexRT[Btn5D]) {
 			motor[armMotor3] = getSpeed();
 			motor3Value = 2 * SensorValue(encoder3);
-		} else if (vexRT[Btn7U]) {
-			motor[armMotor3] = SensorValue(encoder3) + 150;
+		} else if (vexRT[Btn5D]) {
+			motor[armMotor3] = -getSpeed();
 			motor3Value = 2 * SensorValue(encoder3);
 		} else {
 			motor[armMotor3] = (2 * SensorValue(encoder3)) - motor3Value;
@@ -139,16 +136,12 @@ task usercontrol() {
 
 		//lower arm motors
 		if (vexRT[Btn6U]) {
-			motor[strongArm] = -getSpeed();
-			motor[strongArm2] = -getSpeed();
-			strongArmValue = 3.5 * SensorValue(encoder4);
-		} else if (vexRT[Btn6D]) {
 			motor[strongArm] = getSpeed();
 			motor[strongArm2] = getSpeed();
 			strongArmValue = 3.5 * SensorValue(encoder4);
-		} else if (vexRT[Btn7U]) {
-			motor[strongArm] = (3.5 * SensorValue(encoder4)) - 360;
-			motor[strongArm2] = (3.5 * SensorValue(encoder4)) - 360;
+		} else if (vexRT[Btn6D]) {
+			motor[strongArm] = -getSpeed();
+			motor[strongArm2] = -getSpeed();
 			strongArmValue = 3.5 * SensorValue(encoder4);
 		} else {
 			motor[strongArm] = (3.5 * SensorValue(encoder4)) - strongArmValue;
