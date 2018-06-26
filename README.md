@@ -1,5 +1,4 @@
-# Robotics
-Documentation of stuff done in my robotics class :3
+This repo documents all the stuff I wrote in my high school robotics class.
 
 ### Contents:
 #### 2015/16:
